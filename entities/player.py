@@ -13,7 +13,7 @@ class Player:
         self.y = 600 #posicao no eixo y
         self.raio = 20
         self.velocidade = 800
-        self.vertical = 280
+        self.vertical = 150
         self.morto = False
         self.direcao_x = -1
 
@@ -69,7 +69,6 @@ class Player:
         self.paused = True
         self.velocidade = 0
         self.vertical = 0
-        
     
     # fiz só pra brincar kk
     def restart(self, tela):
