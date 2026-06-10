@@ -3,7 +3,7 @@ from systems.settings import LARGURA, ALTURA
 
 player_sprite = pygame.image.load("assets/Maguinho.png")
 
-TAMANHO_RASTRO = 20
+TAMANHO_RASTRO = 30
 
 class Player:
 
@@ -12,7 +12,7 @@ class Player:
         self.altura = 25
 
         self.x = LARGURA / 2
-        self.y = 600
+        self.y = 500
 
         self.raio = 20
 
