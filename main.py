@@ -7,9 +7,11 @@ tela = pygame.display.set_mode((LARGURA, ALTURA))
 clock = pygame.time.Clock()
 player = Player()
 
+
 def main ():
     running = True
     player.morto = False
+    paused = False
     while running:
         dt = clock.tick(FPS) / 1000
         # poll for events
@@ -24,30 +26,33 @@ def main ():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.QUIT()
-            
-            if event.type == pygame.KEYDOWN:
+                
+                if event.key == pygame.K_1:
+                    paused = not paused   
+                
                 if event.key == pygame.K_SPACE:
                     player.mudar_direcao(dt)
-            
-            if event.type == pygame.KEYDOWN:
+                    
                 if event.key == pygame.K_w:
                     player.morto = True
                     
-            if event.type == pygame.KEYDOWN:
                 if player.morto == True and event.key == pygame.K_r:
                     player.restart(tela)
-            if event.type == pygame.KEYDOWN:
+                    
                 if event.key == pygame.K_p:
                     player.pause(dt)
+                    
                 if event.key == pygame.K_o:
                     player.dispause(dt)
                     
-        if not player.morto:
-            player.subir(dt)
-            player.zigzag(dt)
-            player.morte_lateral(dt)
-        else:
-            player.game_over(tela)
+        
+        if not paused:
+            if not player.morto:
+                player.subir(dt)
+                player.zigzag(dt)
+                player.morte_lateral(dt)
+            else:
+                player.game_over(tela)
         
         # if not player.paused:
         #     player.subir(dt)
