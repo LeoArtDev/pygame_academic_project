@@ -11,24 +11,21 @@ player = Player()
 def main ():
     running = True
     player.morto = False
-    paused = False
+    
     while running:
         dt = clock.tick(FPS) / 1000
         # poll for events
         # pygame.QUIT event means the user clicked X to close your window
         tela.fill("#212040")
-        player.draw(tela)
         #player.desenhar_player(tela)
+        player.draw(tela)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    pygame.QUIT()
-                
-                if event.key == pygame.K_1:
-                    paused = not paused   
+                    pygame.QUIT() 
                 
                 if event.key == pygame.K_SPACE:
                     player.mudar_direcao(dt)
@@ -38,21 +35,16 @@ def main ():
                     
                 if player.morto == True and event.key == pygame.K_r:
                     player.restart(tela)
-                    
-                if event.key == pygame.K_p:
-                    player.pause(dt)
-                    
-                if event.key == pygame.K_o:
-                    player.dispause(dt)
-                    
+      
+        if not player.morto:
+            player.atualizar_rastro(dt)
+            player.zigzag(dt)
+            player.morte_lateral(dt)
+        else:
+            player.game_over(tela)
         
-        if not paused:
-            if not player.morto:
-                player.subir(dt)
-                player.zigzag(dt)
-                player.morte_lateral(dt)
-            else:
-                player.game_over(tela)
+        
+
         
         # if not player.paused:
         #     player.subir(dt)
