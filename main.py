@@ -1,28 +1,20 @@
 import pygame
 from entities.player import Player
 from entities.obstacles import Obstacle
+from systems.collision import checar_colisao
 from systems.settings import LARGURA, ALTURA, FPS
 # pygame setup
 pygame.init()
 tela = pygame.display.set_mode((LARGURA, ALTURA))
 clock = pygame.time.Clock()
 player = Player()
-obstacle = Obstacle()
-
+obstacles = [
+    Obstacle(100, 100),
+    Obstacle(400, 0)
+    ]
 def main ():
     running = True
     player.morto = False
-    
-    def checar_colisao():
-        dx = obstacle.x - player.x
-        dy = obstacle.y - player.y
-
-        distancia_quadrada = dx * dx + dy * dy
-
-        soma_raios = player.raio + obstacle.raio
-
-        if distancia_quadrada <= soma_raios * soma_raios:
-            player.morto = True
             
     while running:
         dt = clock.tick(FPS) / 1000
@@ -31,7 +23,16 @@ def main ():
         tela.fill("#212040")
         #player.desenhar_player(tela)
         player.draw(tela)
-        obstacle.draw(tela)
+        
+        for obstacle in obstacles:
+
+            obstacle.draw(tela)
+
+            if not player.morto:
+                obstacle.atualizar(dt)
+
+            if checar_colisao(player, obstacle):
+                player.morto = True
 
         
         
@@ -50,14 +51,13 @@ def main ():
                     
                 if player.morto == True and event.key == pygame.K_r:
                     player.restart(tela)
-                    obstacle.restart(tela)
+                    for obstacle in obstacles:
+                        obstacle.restart()
       
         if not player.morto:
             player.atualizar_rastro(dt)
             player.zigzag(dt)
             player.morte_lateral(dt)
-            obstacle.atualizar(dt)
-            checar_colisao()
         else:
             player.game_over(tela)
         

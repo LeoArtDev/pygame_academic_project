@@ -3,9 +3,12 @@ from systems.settings import LARGURA, ALTURA
 
 class Obstacle:
     
-    def __init__(self):
-        self.x = LARGURA / 2
-        self.y = 100
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        
+        self.x_inicial = x
+        self.y_inicial = y
         
         self.raio = 120
         
@@ -22,8 +25,6 @@ class Obstacle:
     def atualizar(self, dt):
         self.y += self.velocidade * dt
         
-    def restart(self, tela):
-            self.x = LARGURA / 2
-            self.y = 100
-            self.draw(tela)
-            
+    def restart(self):
+        self.x = self.x_inicial
+        self.y = self.y_inicial
