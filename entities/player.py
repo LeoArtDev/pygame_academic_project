@@ -12,7 +12,7 @@ class Player:
         self.altura = 25
 
         self.x = LARGURA / 2
-        self.y = 500
+        self.y = 800
 
         self.raio = 20
 
@@ -80,7 +80,7 @@ class Player:
     def zigzag(self, dt):
         self.x += self.direcao_x * self.velocidade * dt
 
-    def mudar_direcao(self, dt):
+    def mudar_direcao(self):
         self.direcao_x *= -1
 
     def morte_lateral(self, dt):
@@ -108,10 +108,9 @@ class Player:
         self.morto = False
 
         self.x = LARGURA / 2
-        self.y = 600
+        self.y = 800
 
         self.rastro.clear()
 
-        self.draw(tela)
 
 print(player_sprite.get_size())
